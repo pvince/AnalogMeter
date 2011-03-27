@@ -1,0 +1,131 @@
+/*
+1. Try to establish serial connection with computer.
+
+2. Send firmware version back to computer.
+3. Wait for instructions from computer.
+
+4. Check message (E-stop, Start, Ping, [Set speed, Move, ToolCmd])
+	E-stop:stop everything
+	Start: Start executing queue
+	ping: send back an acknowledge message
+	Set speed: Add to queue
+	Move: Add to queue
+	ToolCmd: Add to queue
+
+Queue Control Module
+	create a buffer of around 500 instructions
+	store an initial 250 commands.
+	when start is executed start processing the queue
+	before poping each instruction off the queue check for queue flag.
+	during normal motor delay time listen for computer commands without requesting anything.
+	after 10 instructions have been processed during motor delay...
+		prompt the computer for instruction
+		read the instruction
+		error check the instruction
+		send message (received ok and send another, received ok hold off for now, send again)
+	when motor is slow timer runs out return to executing the queue.
+	
+
+Needed Flags
+	Process queue
+	Ping, process at next convenience
+	start queue
+
+Needed Interrupts
+	E-Stop, clear queue flag
+		
+
+Datatype	RAM usage
+void keyword	N/A
+boolean		1 byte
+char		1 byte
+unsigned char	1 byte
+int		2 byte
+unsigned int	2 byte
+word		2 byte
+long		4 byte
+unsigned long	4 byte
+float		4 byte
+double		4 byte
+string		1 byte + x
+array		1 byte + x
+enum		N/A
+struct		N/A
+pointer		N/A
+
+
+Messages:
+-32 bits to work with
+-|type| information |type|
+
+0 Ping: 0000
+1 Acknowledge: 0001 |error 0 or 1 (one bit) | (8 bits) Firmware | (open) | type (4 bits)
+2 EStop:	0010 | open | type
+3 Request Commands:	0011 |
+4 Start Queue: 0100
+5 SetSpeed: 0101 |
+6 ToolCMD: 0110 |
+
+1	0001
+2	0010
+3	0011
+4	0100
+5	0101
+6	0110
+7	0111
+8	1000
+9	1001
+a	1010
+b	1011
+c	1100
+d	1101
+e	1110
+f	1111
+
+Ping
+0x00	00000000
+0x00	00000000
+Acknoledge with no Error
+0x11	00010001	
+0x06	00000110
+0x17	00010111
+Acknoledge with Error
+0x12	00010010
+0x06	00000110	
+0x14	00010100
+E-Stop
+0x21	00100001	
+0x21	00100001
+Request Commands
+0x30	00110000
+0x14	[#Comands P]
+0x14	Parity
+Start Queue
+0x41	01000001
+0x41	01000001
+SetSpeed
+0x5c	01011100
+0x9c	10011100
+0x41	01000001
+0x00	00000000
+0x81	10000001
+
+Move
+0x60	01100000
+0x81	[UpperX P]
+0x00	[LowerX P]
+0x00	[~X_botBits P]
+0x7e	[UpperY P]
+0xff	[LowerY P]
+0x06	[~Y_botBits P]
+0x00	[UpperZ P]
+0x00	[LowerZ P]
+0x00	[~Z_botBits P]
+0x66	[Parity]
+ToolCommand
+0x72 0x71 [011100(OnOFF)P]
+0x72 0x71 [Parity]
+
+0xFF	11111111	Parity Error
+
+/*
