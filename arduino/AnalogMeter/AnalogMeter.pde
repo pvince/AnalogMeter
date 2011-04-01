@@ -1,8 +1,19 @@
-#define MAX_VALUE   180
-#define WRITE_DELAY 500
-#define INLENGTH 16
-#define INTERMINATOR 126
+#define MAX_VALUE    180 // Max value to write to the analog display.
+#define WRITE_DELAY  500 // Delay between updates to the analog display.  I see this is flawed now.
+#define INLENGTH     16  // Max length of a single input string before it is auto-terminated.
+#define INTERMINATOR 126 // ~
 
+/*
+I think I am going to update the comm protocal:
+[Type][Value][Terminator]
+    L1.67~  -- System Load for Unix
+    M98~    -- Memory % used for Unix / Windows
+    C35~    -- CPU % used
+
+Maybe extend "Type" to include setting variables?
+One issue is if "load" gets too high, it just sits at max.
+If we could change Load, via a "Set" command, like "SL4~".
+ */
 char inString[INLENGTH+1];
 int inCount;
 
