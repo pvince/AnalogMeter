@@ -36,11 +36,19 @@ void loop()  {
     }
   } while (++inCount < INLENGTH);
   inString[inCount] = 0;                     // null terminate the string
+  if(inString[0] == 'C') {
+    // CPU standard 100%
+  } else if (inString[0] == 'L') {
+    // Load, we render from 0 to 3
+  } else if (inString[0] == 'M') {
+    // Memory % - 0 to 100
+  }
   float test = atof(inString);
   Serial.print(inString);
   Serial.print(" - ");
   Serial.println(test);
-  gotoValue(test*53.33 );
+  //gotoValue(test*53.33 );
+  gotoValue(test*0.9 );
 }
 
 void gotoValue(int target) {
