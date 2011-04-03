@@ -1,1 +1,1 @@
-ps aux | awk '{sum +=}; END {print sum}'
+ps aux | awk '{sum +=$4}; END {print sum}'
