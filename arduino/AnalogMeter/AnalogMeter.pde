@@ -26,6 +26,20 @@ void setup()  {
 } 
 
 void loop()  {
+/*
+Idea for here, implement a kind of simple command queue.
+- Increase length of input string to 128 or so
+- Read input until we are out of serial data or hit 128
+Fall through to a parse section
+- Process the string
+  1. check character 0 for command type
+  2. Read contents until we hit ~ or end of string.
+  2.1. If we hit ~ then depending on char0, execute the appropriate command,
+       then return to input read waiting.
+  2.2. If we hit end of string, return to input read waiting.
+
+*/
+
   inCount = 0;
   do {
     while (!Serial.available());             // wait for input
