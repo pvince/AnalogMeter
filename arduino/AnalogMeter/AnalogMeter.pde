@@ -1,7 +1,17 @@
-#define MAX_VALUE    180 // Max value to write to the analog display.
-#define WRITE_DELAY  500 // Delay between updates to the analog display.  I see this is flawed now.
-#define INLENGTH     16  // Max length of a single input string before it is auto-terminated.
-#define INTERMINATOR 126 // ~
+#define MAX_VALUE    180  // Max value to write to the analog display.
+#define WRITE_DELAY  500  // Delay between updates to the analog display.  I see this is flawed now.
+#define NEEDLE_SPD   5    // Speed for needle movement.  (0 - 10)
+
+#define INLENGTH     128128128128128128128128128128128128ngth of a single input string before it is auto-terminated.
+#define INTERMINATOR 126  // ~
+
+#define DISP_PIN_1  9     // 3v Circular Analog display
+#define DISP_PIN_2  10    // 3v Circular Analog display
+#define DISP_PIN_3  11    // 5v Horizontal Analog display
+
+#define MULT_200    0.9   // Used for 200% outputs (Linux CPU) 
+#define MULT_100    0.45  // Used for 100% outputs (CPU, Memory)
+#define MULT_4      53.3  // Used for system load. (Set for 4 threads max)
 
 /*
 I think I am going to update the comm protocal:
@@ -17,12 +27,11 @@ If we could change Load, via a "Set" command, like "SL4~".
 char inString[INLENGTH+1];
 int inCount;
 
-int ledPin = 9;    // LED connected to digital pin 9
 int currentValue = 0;
 
 void setup()  {
   Serial.begin(9600);
-  analogWrite(ledPin, currentValue);
+  analogWrite(DISP_PIN_1, currentValue);
 } 
 
 void loop()  {
@@ -80,8 +89,8 @@ void gotoValue(int target) {
   // Loop until we have hit the target value.
   for(int i = currentValue; i != target; i = i + (dir * 1)) {
     currentValue = i;
-    analogWrite(ledPin, i);
-    delay(5);
+    analogWrite(DISP_PIN_1, i);
+    delay(NEEDLE_SPD);
   }
 }
 
