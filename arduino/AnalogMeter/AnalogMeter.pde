@@ -2,7 +2,7 @@
 #define WRITE_DELAY  500  // Delay between updates to the analog display.  I see this is flawed now.
 #define NEEDLE_SPD   5    // Speed for needle movement.  (0 - 10)
 
-#define INLENGTH     128128128128128128128128128128128128ngth of a single input string before it is auto-terminated.
+#define INLENGTH     128  //Length of a single input string before it is auto-terminated.
 #define INTERMINATOR 126  // ~
 
 #define DISP_PIN_1  9     // 3v Circular Analog display
@@ -25,14 +25,53 @@ One issue is if "load" gets too high, it just sits at max.
 If we could change Load, via a "Set" command, like "SL4~".
  */
 char inString[INLENGTH+1];
-int inCount;
+int inCount = 0;
+char cmdStr[INLENGTH+1];
+int cmdCnt = 0;
 
 int currentValue = 0;
+char currentCmd = 0;
 
 void setup()  {
   Serial.begin(9600);
   analogWrite(DISP_PIN_1, currentValue);
 } 
+
+void loop2() {
+  while (!Serial.available());  // Wait until there is data available.
+  while(Serial.available() && inCount < 128) {  // Keep reading the data until it is done, or we max out.
+    inString[inCount] = Serial.read();
+    inCount++;
+  }
+  inString[inCount] = 0; // null terminate the string
+
+  // Now we need to process the sent commands
+  float targetVal = 0;
+  for(int i=0; i<inCount; i++) {
+    if(inString[i] == '~') {
+      cmdString[cmdCnt++] = 0;  // null terminate the cmdString
+      targetVal = atof(cmdString);
+
+      // Use the correct multiplier
+      if(currentCmd == 'C') {         // CPU = 100
+        targetVal *= MULT_100; 
+      } else if(currentCmd == 'M') {  // Mem = 100
+        targetVal *= MULT_100; 
+      } else if(currentCmd == 'D') {  // Linux CPU = 200
+        targetVal *= MULT_200; 
+      } else if(currentCmd == 'L') {  // Load = 4
+        targetVal *= MULT_4; 
+      }
+      gotoValue(targetVal); // TODO: Need to also pass in the guage pin.
+      currentCmd = 0;
+      cmdCnt = 0;
+    } else if(currentCmd == 0) // We could also check the byte value range for characters
+      currentCmd = inString[i];
+    else {
+      cmdStr[cmdCnt++] = inString[i];
+    }
+  }
+}
 
 void loop()  {
 /*
