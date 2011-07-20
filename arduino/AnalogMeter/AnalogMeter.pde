@@ -51,18 +51,24 @@ void loop2() {
     if(inString[i] == '~') {
       cmdString[cmdCnt++] = 0;  // null terminate the cmdString
       targetVal = atof(cmdString);
+    
+      int targetDisp = DISP_PIN_1;
 
       // Use the correct multiplier
       if(currentCmd == 'C') {         // CPU = 100
-        targetVal *= MULT_100; 
+        targetVal *= MULT_100;
+        targetDisp = DISP_PIN_1;
       } else if(currentCmd == 'M') {  // Mem = 100
         targetVal *= MULT_100; 
+        targetDisp = DISP_PIN_2;
       } else if(currentCmd == 'D') {  // Linux CPU = 200
         targetVal *= MULT_200; 
+        targetDisp = DISP_PIN_1;
       } else if(currentCmd == 'L') {  // Load = 4
         targetVal *= MULT_4; 
+        targetDisp = DISP_PIN_3;
       }
-      gotoValue(targetVal); // TODO: Need to also pass in the guage pin.
+      gotoValue(targetVal, targetDisp);
       currentCmd = 0;
       cmdCnt = 0;
     } else if(currentCmd == 0) // We could also check the byte value range for characters
@@ -114,6 +120,10 @@ Fall through to a parse section
 }
 
 void gotoValue(int target) {
+  gotoValue(target, DISP_PIN_1);
+}
+
+void gotoValue(int target, int dispPin) {
   // Do a quick sanity check on the target value.
   if(target > MAX_VALUE)
     target = MAX_VALUE;
@@ -128,7 +138,7 @@ void gotoValue(int target) {
   // Loop until we have hit the target value.
   for(int i = currentValue; i != target; i = i + (dir * 1)) {
     currentValue = i;
-    analogWrite(DISP_PIN_1, i);
+    analogWrite(disPin, i);
     delay(NEEDLE_SPD);
   }
 }

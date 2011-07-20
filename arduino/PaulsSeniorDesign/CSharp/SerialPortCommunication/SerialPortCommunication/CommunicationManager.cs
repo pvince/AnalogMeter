@@ -52,6 +52,7 @@ namespace PCComm
         private string _portName = string.Empty;
         private TransmissionType _transType;
         private RichTextBox _displayWindow;
+        private Boolean _appendNewline = false;
         //global manager variables
         private Color[] MessageColor = { Color.Blue, Color.Green, Color.Black, Color.Orange, Color.Red };
         private SerialPort comPort = new SerialPort();
@@ -124,8 +125,17 @@ namespace PCComm
         /// </summary>
         public RichTextBox DisplayWindow
         {
-            get { return _displayWindow; }
-            set { _displayWindow = value; }
+           get { return _displayWindow; }
+           set { _displayWindow = value; }
+        }
+
+        /// <summary>
+        /// Should we append newline characters to the output?
+        /// </summary>
+        public bool AppendNewline
+        {
+           get { return _appendNewline; }
+           set { _appendNewline = value; }
         }
         #endregion
 
@@ -347,6 +357,9 @@ namespace PCComm
         /// <param name="e"></param>
         void comPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            String n = "";
+            if (_appendNewline)
+               n = "\n";
             //determine the mode the user selected (binary/string)
             switch (CurrentTransmissionType)
             {
@@ -355,7 +368,7 @@ namespace PCComm
                     //read data waiting in the buffer
                     string msg = comPort.ReadExisting();
                     //display the data to the user
-                    DisplayData(MessageType.Incoming, msg + "\n");
+                    DisplayData(MessageType.Incoming, msg + n);
                     break;
                 //user chose binary
                 case TransmissionType.Hex:
@@ -366,13 +379,13 @@ namespace PCComm
                     //read the data and store it
                     comPort.Read(comBuffer, 0, bytes);
                     //display the data to the user
-                    DisplayData(MessageType.Incoming, ByteToHex(comBuffer) + "\n");
+                    DisplayData(MessageType.Incoming, ByteToHex(comBuffer) + n);
                     break;
                 default:
                     //read data waiting in the buffer
                     string str = comPort.ReadExisting();
                     //display the data to the user
-                    DisplayData(MessageType.Incoming, str + "\n");
+                    DisplayData(MessageType.Incoming, str + n);
                     break;
             }
         }

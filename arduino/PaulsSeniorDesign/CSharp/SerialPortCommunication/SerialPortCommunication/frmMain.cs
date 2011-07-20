@@ -69,7 +69,6 @@ namespace PCComm
         {
             rdoText.Checked = true;
             cmdSend.Enabled = false;
-            cmdClose.Enabled = false;
         }
 
         private void cmdSend_Click(object sender, EventArgs e)
@@ -92,6 +91,11 @@ namespace PCComm
         private void cmdClose_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void chkNewLine_CheckedChanged(object sender, EventArgs e)
+        {
+           comm.AppendNewline = chkNewLine.Checked;
         }
     }
 }
