@@ -40,6 +40,22 @@ void setup()  {
   analogWrite(DISP_PIN_1, currentValue);
 } 
 
+
+// TODO: gotoValue is going to need a bit of reworking.
+//      - deal w/ a max value of 64.
+//      - Support for 4 displays.
+void loop3() {
+  while(!serial.available()); // Wait until data is available.
+  byte curCmd = 0; 
+  if( Serial.available() ) {
+    curCmd = Serial.read();
+    int dispID = (curCmd & 192) >> 6; // Grab upper 2 bits
+    int dispValue = (curCmd & 63); // Grab lower 6 bits
+    gotoValue(dispID, dispValue); // Set the display to the value.
+  }
+}
+
+
 void loop2() {
   while (!Serial.available());  // Wait until there is data available.
   while(Serial.available() && inCount < 128) {  // Keep reading the data until it is done, or we max out.
