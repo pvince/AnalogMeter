@@ -14,16 +14,19 @@
 #define MULT_4      53.3  // Used for system load. (Set for 4 threads max)
 
 /*
-I think I am going to update the comm protocal:
-[Type][Value][Terminator]
-    L1.67~  -- System Load for Unix
-    M98~    -- Memory % used for Unix / Windows
-    C35~    -- CPU % used
+Protocol:
+- 1 Byte in size.
+- [00]   [00 0000]
+   ID#   Data Bits
 
-Maybe extend "Type" to include setting variables?
-One issue is if "load" gets too high, it just sits at max.
-If we could change Load, via a "Set" command, like "SL4~".
+ID#
+- Display ID#, 0-3
+- Allows for 4 displays.
+Data
+- Value to set the display too, 0-64
+- Gives us 64 positions on an analog display.
  */
+
 char inString[INLENGTH+1];
 int inCount = 0;
 char cmdStr[INLENGTH+1];
