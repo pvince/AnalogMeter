@@ -7,12 +7,13 @@
 
 #define DISP_PIN_1  9     // 3v Circular Analog display
 #define DISP_PIN_2  10    // 3v Circular Analog display
-#define DISP_PIN_3  11    // 5v Horizontal Analog display
+#define DISP_PIN_3  11    // Unused...
+#define DISP_PIN_4  12    // Unused...
 
-#define MULT_200    0.9   // Used for 200% outputs (Linux CPU) 
-#define MULT_100    0.45  // Used for 100% outputs (CPU, Memory)
-#define MULT_4      53.3  // Used for system load. (Set for 4 threads max)
-
+#define MULT_200    0.9   // (Deprecated) Used for 200% outputs (Linux CPU) 
+#define MULT_100    0.45  // (Deprecated) Used for 100% outputs (CPU, Memory)
+#define MULT_4      53.3  // (Deprecated) Used for system load. (Set for 4 threads max)
+#define MULT_64     2.81  // Used for standard communication (64*2.81=180)
 /*
 Protocol:
 - 1 Byte in size.
@@ -50,7 +51,7 @@ void loop3() {
   if( Serial.available() ) {
     curCmd = Serial.read();
     int dispID = (curCmd & 192) >> 6; // Grab upper 2 bits
-    int dispValue = (curCmd & 63); // Grab lower 6 bits
+    int dispValue = MULT_64 * (curCmd & 63); // Grab lower 6 bits
     gotoValue(dispID, dispValue); // Set the display to the value.
   }
 }
@@ -143,6 +144,22 @@ void gotoValue(int target) {
 }
 
 void gotoValue(int target, int dispPin) {
+  int targetPin = DISP_PIN_1;
+  switch(dispPin) {
+    case 1:
+      targetPin = DISP_PIN_1;
+      break;
+    case 2:
+      targetPin = DISP_PIN_2;
+      break;
+    case 3:
+      targetPin = DISP_PIN_3;
+      break;
+    case 4:
+      targetPin = DISP_PIN_4;
+      break;
+  }
+
   // Do a quick sanity check on the target value.
   if(target > MAX_VALUE)
     target = MAX_VALUE;
@@ -157,7 +174,7 @@ void gotoValue(int target, int dispPin) {
   // Loop until we have hit the target value.
   for(int i = currentValue; i != target; i = i + (dir * 1)) {
     currentValue = i;
-    analogWrite(disPin, i);
+    analogWrite(targetPin, i);
     delay(NEEDLE_SPD);
   }
 }
