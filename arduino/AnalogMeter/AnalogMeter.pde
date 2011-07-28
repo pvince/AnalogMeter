@@ -1,18 +1,11 @@
 #define MAX_VALUE    210  // Max value to write to the analog display.
-#define WRITE_DELAY  500  // Delay between updates to the analog display.  I see this is flawed now.
 #define NEEDLE_SPD   3    // Speed for needle movement.  (0 - 10)
-
-#define INLENGTH     128  //Length of a single input string before it is auto-terminated.
-#define INTERMINATOR 126  // ~
 
 #define DISP_PIN_1  9     // 3v Circular Analog display
 #define DISP_PIN_2  10    // 3v Circular Analog display
 #define DISP_PIN_3  11    // Unused...
 #define DISP_PIN_4  12    // Unused...
 
-#define MULT_200    0.9   // (Deprecated) Used for 200% outputs (Linux CPU) 
-#define MULT_100    0.45  // (Deprecated) Used for 100% outputs (CPU, Memory)
-#define MULT_4      53.3  // (Deprecated) Used for system load. (Set for 4 threads max)
 float MULT_64 = MAX_VALUE / 64;
 /*
 Protocol:
@@ -27,14 +20,6 @@ Data
 - Value to set the display too, 0-64
 - Gives us 64 positions on an analog display.
  */
-
-char inString[INLENGTH+1];
-int inCount = 0;
-char cmdStr[INLENGTH+1];
-int cmdCnt = 0;
-
-int currentValue = 0;
-char currentCmd = 0;
 
 void setup()  {
   Serial.begin(9600);
