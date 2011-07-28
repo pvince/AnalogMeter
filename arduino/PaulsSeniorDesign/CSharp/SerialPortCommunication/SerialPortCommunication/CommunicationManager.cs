@@ -220,7 +220,6 @@ namespace PCComm
                     //display the message
                     DisplayData(MessageType.Outgoing, msg + "\n");
                     break;
-                    break;
             }
         }
         #endregion
@@ -233,6 +232,9 @@ namespace PCComm
         /// <returns>a byte array</returns>
         private byte[] HexToByte(string msg)
         {
+            if ((msg.Length % 2) == 1)
+                msg = "0" + msg;
+
             //remove any spaces from the string
             msg = msg.Replace(" ", "");
             //create a byte array the length of the
@@ -315,6 +317,12 @@ namespace PCComm
                 DisplayData(MessageType.Error, ex.Message);
                 return false;
             }
+        }
+
+        public bool ClosePort()
+        {
+            comPort.Close();
+            return comPort.IsOpen;
         }
         #endregion
 

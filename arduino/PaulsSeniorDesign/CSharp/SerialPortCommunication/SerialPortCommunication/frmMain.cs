@@ -97,5 +97,10 @@ namespace PCComm
         {
            comm.AppendNewline = chkNewLine.Checked;
         }
+
+        private void btnClose_Click_1(object sender, EventArgs e)
+        {
+            comm.ClosePort();
+        }
     }
 }
