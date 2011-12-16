@@ -1,4 +1,4 @@
-#define DEBUG 1
+#define DEBUG 0
 
 #define MAX_VALUE    180
 // Max value to write to the analog display.
