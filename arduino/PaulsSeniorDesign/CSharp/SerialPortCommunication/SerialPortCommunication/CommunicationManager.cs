@@ -230,7 +230,7 @@ namespace PCComm
         /// </summary>
         /// <param name="msg">string to convert</param>
         /// <returns>a byte array</returns>
-        private byte[] HexToByte(string msg)
+        public byte[] HexToByte(string msg)
         {
             if ((msg.Length % 2) == 1)
                 msg = "0" + msg;
@@ -256,7 +256,7 @@ namespace PCComm
         /// </summary>
         /// <param name="comByte">byte array to convert</param>
         /// <returns>a hex string</returns>
-        private string ByteToHex(byte[] comByte)
+        public string ByteToHex(byte[] comByte)
         {
             //create a new StringBuilder object
             StringBuilder builder = new StringBuilder(comByte.Length * 3);
@@ -265,7 +265,7 @@ namespace PCComm
                 //convert the byte to a string and add to the stringbuilder
                 builder.Append(Convert.ToString(data, 16).PadLeft(2, '0').PadRight(3, ' '));
             //return the converted value
-            return builder.ToString().ToUpper();
+            return builder.ToString().ToUpper().Substring(0,builder.Length-1);
         }
         #endregion
 
@@ -369,12 +369,13 @@ namespace PCComm
             if (_appendNewline)
                n = "\n";
             //determine the mode the user selected (binary/string)
+            string msg = "";
             switch (CurrentTransmissionType)
             {
                 //user chose string
                 case TransmissionType.Text:
                     //read data waiting in the buffer
-                    string msg = comPort.ReadExisting();
+                    msg = comPort.ReadExisting();
                     //display the data to the user
                     DisplayData(MessageType.Incoming, msg + n);
                     break;
@@ -386,8 +387,11 @@ namespace PCComm
                     byte[] comBuffer = new byte[bytes];
                     //read the data and store it
                     comPort.Read(comBuffer, 0, bytes);
+
+                    msg = ByteToHex(comBuffer) + n;
+
                     //display the data to the user
-                    DisplayData(MessageType.Incoming, ByteToHex(comBuffer) + n);
+                    DisplayData(MessageType.Incoming, msg);
                     break;
                 default:
                     //read data waiting in the buffer

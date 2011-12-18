@@ -1,0 +1,9 @@
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\bin\Debug\SerialPortCommunication.exe.config
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\obj\Debug\PCComm.frmMain.resources
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\obj\Debug\PCComm.Properties.Resources.resources
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\obj\Debug\SerialPortCommunication.csproj.GenerateResource.Cache
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\bin\Debug\SerialPortCommunication.exe
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\bin\Debug\SerialPortCommunication.pdb
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\obj\Debug\SerialPortCommunication.exe
+C:\Users\vincentp\Documents\Programming\AnalogMeter\arduino\PaulsSeniorDesign\CSharp\SerialPortCommunication\SerialPortCommunication\obj\Debug\SerialPortCommunication.pdb
