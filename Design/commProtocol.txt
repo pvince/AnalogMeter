@@ -1,0 +1,28 @@
+==== Current ====
+One command: GotoVal [00] [0000]
+                     ID#   Value
+
+==== New Design ====
+New command structure: [000] [0 0000 0000 0000]
+                    [Cmd ID] [  Command Data  ]
+This will allow for 8 different messages, and data values up to 2^13,
+or just more flexible commands
+
+--- New Commands ---
+---- Definite -----
+* GotoValue
+** CommandID: 0
+** [000] [Disp ID] [ Value for display ]
+** [000] [0 00] [00 0000 0000]
+* Ping
+** CommandID: 1
+** [001] [0 0000 0000 0000]
+* SetSpeed
+
+* GotoAbsolute
+
+--- Brainstorming ----
+* SetCalibration
+* GetCalibration (maybe SetCalibration w/ a max value?)
+* GetValue
+* SetGaugeID
