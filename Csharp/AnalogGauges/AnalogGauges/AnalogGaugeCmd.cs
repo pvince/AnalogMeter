@@ -27,8 +27,14 @@ namespace AnalogGauges
         {
             loadPorts();
             loadCounterTypes();
+            loadSettings();
         }
 
+        private void AnalogGaugeCmd_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            closePort();
+            saveSettings();
+        }
 
         private void btnOpenPort_Click(object sender, EventArgs e)
         {
@@ -69,6 +75,42 @@ namespace AnalogGauges
             if (cmbRhtGaugeType.Items.Count > 0)
                 cmbRhtGaugeType.SelectedIndex = 0;
         }
+
+        private void loadSettings()
+        {
+            // General Form Settings
+            cmbPortList.SelectedItem = Properties.Settings.Default.Port;
+
+            // Left Gauge Settings
+            cmbLftGaugeType.SelectedItem = Properties.Settings.Default.LftGaugeType;
+            txtLftAvg.Text = Properties.Settings.Default.LftGaugeAvg;
+            txtLftRefresh.Text = Properties.Settings.Default.LftGaugeRfrsh;
+
+            // Right Gauge Settings
+            cmbRhtGaugeType.SelectedItem = Properties.Settings.Default.RhtGaugeType;
+            txtRhtAvg.Text = Properties.Settings.Default.RhtGaugeAvg;
+            txtRhtRefresh.Text = Properties.Settings.Default.RhtGaugeRfrsh;
+
+        }
+
+        private void saveSettings()
+        {
+            // General Form Settings
+            Properties.Settings.Default.Port = (string)cmbPortList.SelectedItem;
+
+            // Left Gauge Settings
+            Properties.Settings.Default.LftGaugeType = (string)cmbLftGaugeType.SelectedItem;
+            Properties.Settings.Default.LftGaugeAvg = txtLftAvg.Text;
+            Properties.Settings.Default.LftGaugeRfrsh = txtLftRefresh.Text;
+
+            // Right Gauge Settings
+            Properties.Settings.Default.RhtGaugeType = (string)cmbRhtGaugeType.SelectedItem;
+            Properties.Settings.Default.RhtGaugeAvg = txtRhtAvg.Text;
+            Properties.Settings.Default.RhtGaugeRfrsh = txtRhtRefresh.Text;
+
+            // Save the settings
+            Properties.Settings.Default.Save();
+        }
         #endregion
 
         #region Port Functions
@@ -86,6 +128,8 @@ namespace AnalogGauges
 
         private void closePort()
         {
+            chkLftEnable.Checked = false;
+            chkRhtEnable.Checked = false;
             if (cm.isOpen())
                 cm.ClosePort();
 
@@ -279,6 +323,12 @@ namespace AnalogGauges
 
             //MessageBox.Show(RhtCounter.NextSample().RawValue.ToString());
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            label2.Text = AGTools.getDirectorySize("Z:\\SCM\\2012.0.0\\ProductInstallers").ToString();
+        }
+
 
     }
 }

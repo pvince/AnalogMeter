@@ -12,7 +12,8 @@ namespace AnalogGauges
         public enum statType
         {
             CPU,
-            RAM
+            RAM,
+            FileCount
         }
 
         public static String[] getStatTypeNames()
@@ -85,6 +86,11 @@ namespace AnalogGauges
                     break;
                 case statType.RAM:
                     currentValue = 100 - Convert.ToInt32( ((float)compInfo.AvailablePhysicalMemory / (float)compInfo.TotalPhysicalMemory) * 100);
+                    break;
+                case statType.FileCount:
+                    double fileCount = AGTools.getDirectorySize("Z:\\SCM\\2012.0.0\\ProductInstallers"); //System.IO.Directory.GetFiles("Z:\\SCM\\2012.0.0\\ProductInstallers", "*", System.IO.SearchOption.AllDirectories).Length;
+                    double maxSize =  4000000000.0;
+                    currentValue = Convert.ToInt32((fileCount / maxSize) * 100.0);
                     break;
             }
             if (currentValue < 0 || currentValue > 100)

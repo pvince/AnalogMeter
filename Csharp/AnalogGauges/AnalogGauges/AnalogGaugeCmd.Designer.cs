@@ -71,6 +71,9 @@ namespace AnalogGauges
             this.lblRhtGaugeType = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.tpDebug1 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tmrLftGauge = new System.Windows.Forms.Timer(this.components);
             this.tmrRhtGauge = new System.Windows.Forms.Timer(this.components);
@@ -84,6 +87,7 @@ namespace AnalogGauges
             this.splitContainer1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tpDebug1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -135,7 +139,7 @@ namespace AnalogGauges
             this.btnOpenPort.Location = new System.Drawing.Point(141, 12);
             this.btnOpenPort.Name = "btnOpenPort";
             this.btnOpenPort.Size = new System.Drawing.Size(121, 23);
-            this.btnOpenPort.TabIndex = 9;
+            this.btnOpenPort.TabIndex = 3;
             this.btnOpenPort.Text = "Open Port";
             this.btnOpenPort.UseVisualStyleBackColor = true;
             this.btnOpenPort.Click += new System.EventHandler(this.btnOpenPort_Click);
@@ -147,7 +151,7 @@ namespace AnalogGauges
             this.txtMsg.Location = new System.Drawing.Point(6, 111);
             this.txtMsg.Name = "txtMsg";
             this.txtMsg.Size = new System.Drawing.Size(268, 20);
-            this.txtMsg.TabIndex = 8;
+            this.txtMsg.TabIndex = 7;
             // 
             // rtbOutput
             // 
@@ -157,7 +161,7 @@ namespace AnalogGauges
             this.rtbOutput.Location = new System.Drawing.Point(6, 6);
             this.rtbOutput.Name = "rtbOutput";
             this.rtbOutput.Size = new System.Drawing.Size(352, 99);
-            this.rtbOutput.TabIndex = 7;
+            this.rtbOutput.TabIndex = 6;
             this.rtbOutput.Text = "";
             // 
             // btnClosePort
@@ -166,7 +170,7 @@ namespace AnalogGauges
             this.btnClosePort.Location = new System.Drawing.Point(268, 12);
             this.btnClosePort.Name = "btnClosePort";
             this.btnClosePort.Size = new System.Drawing.Size(121, 23);
-            this.btnClosePort.TabIndex = 6;
+            this.btnClosePort.TabIndex = 4;
             this.btnClosePort.Text = "Close Port";
             this.btnClosePort.UseVisualStyleBackColor = true;
             this.btnClosePort.Click += new System.EventHandler(this.btnClosePort_Click);
@@ -178,14 +182,14 @@ namespace AnalogGauges
             this.cmbPortList.Location = new System.Drawing.Point(14, 12);
             this.cmbPortList.Name = "cmbPortList";
             this.cmbPortList.Size = new System.Drawing.Size(93, 21);
-            this.cmbPortList.TabIndex = 10;
+            this.cmbPortList.TabIndex = 1;
             // 
             // btnRefresh
             // 
             this.btnRefresh.Location = new System.Drawing.Point(113, 12);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(22, 23);
-            this.btnRefresh.TabIndex = 11;
+            this.btnRefresh.TabIndex = 2;
             this.btnRefresh.Text = "R";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
@@ -196,7 +200,7 @@ namespace AnalogGauges
             this.btnSend.Location = new System.Drawing.Point(280, 109);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(78, 23);
-            this.btnSend.TabIndex = 12;
+            this.btnSend.TabIndex = 8;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
@@ -206,9 +210,10 @@ namespace AnalogGauges
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tpGaugeSetup);
             this.tabControl1.Controls.Add(this.tpDebug);
             this.tabControl1.Controls.Add(this.tpGaugeCtrl);
-            this.tabControl1.Controls.Add(this.tpGaugeSetup);
+            this.tabControl1.Controls.Add(this.tpDebug1);
             this.tabControl1.Location = new System.Drawing.Point(12, 41);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -271,7 +276,7 @@ namespace AnalogGauges
             this.chkRhtDsp.Location = new System.Drawing.Point(6, 29);
             this.chkRhtDsp.Name = "chkRhtDsp";
             this.chkRhtDsp.Size = new System.Drawing.Size(88, 17);
-            this.chkRhtDsp.TabIndex = 5;
+            this.chkRhtDsp.TabIndex = 11;
             this.chkRhtDsp.Text = "Right Display";
             this.chkRhtDsp.UseVisualStyleBackColor = true;
             // 
@@ -281,7 +286,7 @@ namespace AnalogGauges
             this.chkLftDsp.Location = new System.Drawing.Point(6, 6);
             this.chkLftDsp.Name = "chkLftDsp";
             this.chkLftDsp.Size = new System.Drawing.Size(81, 17);
-            this.chkLftDsp.TabIndex = 4;
+            this.chkLftDsp.TabIndex = 10;
             this.chkLftDsp.Text = "Left Display";
             this.chkLftDsp.UseVisualStyleBackColor = true;
             // 
@@ -309,7 +314,7 @@ namespace AnalogGauges
             this.textBox1.Location = new System.Drawing.Point(93, 15);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(52, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.TabIndex = 12;
             // 
             // tpGaugeSetup
             // 
@@ -367,7 +372,6 @@ namespace AnalogGauges
             this.txtLftRefresh.Name = "txtLftRefresh";
             this.txtLftRefresh.Size = new System.Drawing.Size(80, 20);
             this.txtLftRefresh.TabIndex = 7;
-            this.txtLftRefresh.Text = "250";
             // 
             // txtLftAvg
             // 
@@ -376,8 +380,7 @@ namespace AnalogGauges
             this.txtLftAvg.Location = new System.Drawing.Point(79, 95);
             this.txtLftAvg.Name = "txtLftAvg";
             this.txtLftAvg.Size = new System.Drawing.Size(80, 20);
-            this.txtLftAvg.TabIndex = 6;
-            this.txtLftAvg.Text = "4";
+            this.txtLftAvg.TabIndex = 8;
             // 
             // label4
             // 
@@ -403,7 +406,7 @@ namespace AnalogGauges
             this.chkLftEnable.Location = new System.Drawing.Point(7, 20);
             this.chkLftEnable.Name = "chkLftEnable";
             this.chkLftEnable.Size = new System.Drawing.Size(65, 17);
-            this.chkLftEnable.TabIndex = 2;
+            this.chkLftEnable.TabIndex = 5;
             this.chkLftEnable.Text = "Enabled";
             this.chkLftEnable.UseVisualStyleBackColor = true;
             this.chkLftEnable.CheckedChanged += new System.EventHandler(this.chkLftEnable_CheckedChanged);
@@ -429,7 +432,7 @@ namespace AnalogGauges
             this.cmbLftGaugeType.Location = new System.Drawing.Point(79, 43);
             this.cmbLftGaugeType.Name = "cmbLftGaugeType";
             this.cmbLftGaugeType.Size = new System.Drawing.Size(80, 21);
-            this.cmbLftGaugeType.TabIndex = 0;
+            this.cmbLftGaugeType.TabIndex = 6;
             // 
             // groupBox1
             // 
@@ -457,8 +460,7 @@ namespace AnalogGauges
             this.txtRhtAvg.Location = new System.Drawing.Point(78, 94);
             this.txtRhtAvg.Name = "txtRhtAvg";
             this.txtRhtAvg.Size = new System.Drawing.Size(86, 20);
-            this.txtRhtAvg.TabIndex = 13;
-            this.txtRhtAvg.Text = "2";
+            this.txtRhtAvg.TabIndex = 12;
             // 
             // chkRhtEnable
             // 
@@ -494,7 +496,7 @@ namespace AnalogGauges
             this.cmbRhtGaugeType.Location = new System.Drawing.Point(78, 42);
             this.cmbRhtGaugeType.Name = "cmbRhtGaugeType";
             this.cmbRhtGaugeType.Size = new System.Drawing.Size(86, 21);
-            this.cmbRhtGaugeType.TabIndex = 7;
+            this.cmbRhtGaugeType.TabIndex = 10;
             // 
             // txtRhtRefresh
             // 
@@ -504,7 +506,6 @@ namespace AnalogGauges
             this.txtRhtRefresh.Name = "txtRhtRefresh";
             this.txtRhtRefresh.Size = new System.Drawing.Size(86, 20);
             this.txtRhtRefresh.TabIndex = 11;
-            this.txtRhtRefresh.Text = "500";
             // 
             // lblRhtGaugeType
             // 
@@ -531,6 +532,37 @@ namespace AnalogGauges
             this.splitter1.Size = new System.Drawing.Size(3, 131);
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
+            // 
+            // tpDebug1
+            // 
+            this.tpDebug1.Controls.Add(this.label2);
+            this.tpDebug1.Controls.Add(this.button3);
+            this.tpDebug1.Location = new System.Drawing.Point(4, 22);
+            this.tpDebug1.Name = "tpDebug1";
+            this.tpDebug1.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDebug1.Size = new System.Drawing.Size(364, 137);
+            this.tpDebug1.TabIndex = 3;
+            this.tpDebug1.Text = "Debug";
+            this.tpDebug1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(88, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "label2";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(7, 7);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // timer1
             // 
@@ -560,6 +592,7 @@ namespace AnalogGauges
             this.Name = "AnalogGaugeCmd";
             this.Text = "AnalogGaugeCmd";
             this.Load += new System.EventHandler(this.AnalogGaugeCmd_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AnalogGaugeCmd_FormClosed);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -575,6 +608,8 @@ namespace AnalogGauges
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tpDebug1.ResumeLayout(false);
+            this.tpDebug1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,5 +662,8 @@ namespace AnalogGauges
         private System.Windows.Forms.Timer tmrLftGauge;
         private System.Windows.Forms.Timer tmrRhtGauge;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TabPage tpDebug1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button3;
     }
 }
