@@ -13,7 +13,9 @@ namespace AnalogGauges
         {
             CPU,
             RAM,
-            FileCount
+            FileCount,
+            DiskActivity,
+            TimingTestLines
         }
 
         public static String[] getStatTypeNames()
@@ -68,6 +70,12 @@ namespace AnalogGauges
                     // http://stackoverflow.com/questions/105031/c-sharp-how-do-you-get-total-amount-of-ram-the-computer-has
                     compInfo = new ComputerInfo();
                     break;
+               case statType.DiskActivity:
+                    statCounter = new PerformanceCounter();
+                    statCounter.CategoryName = "LogicalDisk";
+                    statCounter.CounterName = "% Disk Time";
+                    statCounter.InstanceName = "_Total";
+                    break;
             }
         }
 
@@ -91,6 +99,21 @@ namespace AnalogGauges
                     double fileCount = AGTools.getDirectorySize("Z:\\SCM\\2012.0.0\\ProductInstallers"); //System.IO.Directory.GetFiles("Z:\\SCM\\2012.0.0\\ProductInstallers", "*", System.IO.SearchOption.AllDirectories).Length;
                     double maxSize =  4000000000.0;
                     currentValue = Convert.ToInt32((fileCount / maxSize) * 100.0);
+                    break;
+               case statType.DiskActivity:
+                    currentValue = Convert.ToInt32(statCounter.NextValue());
+                    if (currentValue > 100)
+                       currentValue = 100;
+                    break;
+                case statType.TimingTestLines:
+                    int currentLines = AGTools.getFileLineCount(@"Z:\SCM\PRIVATE\BuildInProgress\timingTest.log");
+                    if(currentLines > 0)
+                    {
+                        currentValue = Convert.ToInt32((currentLines / 29.0) * 100);
+                    }
+                    break;
+               default:
+                    currentValue = Convert.ToInt32(statCounter.NextValue());
                     break;
             }
             if (currentValue < 0 || currentValue > 100)

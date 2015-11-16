@@ -39,5 +39,14 @@ namespace AnalogGauges
             // Return total size
             return b;
         }
+
+        public static int getFileLineCount(string filepath)
+        {
+            string[] lines = File.ReadAllLines(filepath);
+
+
+            return lines.Length;
+        }
+
     }
 }
