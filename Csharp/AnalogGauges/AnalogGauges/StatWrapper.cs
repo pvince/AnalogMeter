@@ -12,6 +12,8 @@ namespace AnalogGauges
         public enum statType
         {
             CPU,
+            CPU_Utility,
+            GPU,
             RAM,
             FileCount,
             DiskActivity,
@@ -61,9 +63,21 @@ namespace AnalogGauges
             {
                 case statType.CPU:
                     statCounter = new PerformanceCounter();
-                    statCounter.CategoryName = "Processor";
+                    statCounter.CategoryName = "Processor Information";
                     statCounter.CounterName = "% Processor Time";
                     statCounter.InstanceName = "_Total";
+                    break;
+                case statType.CPU_Utility:
+                    statCounter = new PerformanceCounter();
+                    statCounter.CategoryName = "Processor Information";
+                    statCounter.CounterName = "% Processor Utility";
+                    statCounter.InstanceName = "_Total";
+                    break;
+                case statType.GPU:
+                    statCounter = new PerformanceCounter();
+                    statCounter.CategoryName = "NVIDIA GPU";
+                    statCounter.CounterName = "% GPU Usage";
+                    statCounter.InstanceName = "#0 NVIDIA RTX A2000 8GB Laptop GPU (id=1, NVAPI ID=256)";
                     break;
                 case statType.RAM:
                     // Totally cheating here, using VisualBasic libraries to grab the RAM information.
@@ -90,7 +104,9 @@ namespace AnalogGauges
             switch (curStatType)
             {
                 case statType.CPU:
-                    currentValue = Convert.ToInt32(statCounter.NextValue());
+                case statType.CPU_Utility:
+                case statType.GPU:
+                    currentValue = Math.Min(Convert.ToInt32(statCounter.NextValue()), 100);
                     break;
                 case statType.RAM:
                     currentValue = 100 - Convert.ToInt32( ((float)compInfo.AvailablePhysicalMemory / (float)compInfo.TotalPhysicalMemory) * 100);
